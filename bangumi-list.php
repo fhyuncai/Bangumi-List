@@ -2,52 +2,40 @@
 
 /**
  * Plugin Name: Bangumi 追番列表
- * Plugin URI: https://github.com/fhyuncai/wordpress-bangumi-list
+ * Plugin URI: https://github.com/fhyuncai/Bangumi-List
  * Description: 追番列表插件，使用短代码 [bangumi] 即可展示追番列表
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: FHYunCai
  * Author URI: https://yuncaioo.com
  */
 
 defined('ABSPATH') or exit;
-define('BGMLIST_VER', '1.0.0');
+define('BGMLIST_VER', '1.0.1');
 
-require_once("bangumi-api.php");
+require_once('bangumi-api.php');
 
 class bangumiList
 {
-    function __construct()
+    public function __construct()
     {
-        add_action('admin_menu', [$this, 'initBangumi']);
-        add_action('init', [$this, 'register_shortcodes']);
+        add_action('admin_menu', [$this, 'bangumiInit']);
+        add_shortcode('bangumi', [$this, 'bangumiShow']);
+        add_action('wp_enqueue_scripts', [$this, 'bangumiScripts']);
     }
 
-    public function register_shortcodes()
+    public function bangumiInit()
     {
-        add_shortcode('bangumi', [$this, 'outPut']);
-    }
+        $options = $this->_getOption();
 
-    function getOption()
-    {
-        $options = get_option('bangumi_list');
-        if (!is_array($options)) {
-            $options['bangumiID'] = '';
-            $options['color'] = '#ff8c83';
-            $options['isCache'] = false;
-            $options['isProxy'] = false;
-            $options['singleItemNum'] = 10;
-            $options['singleNavNum'] = 3;
-            update_option('bangumi_list', $options);
-        }
-        return $options;
-    }
+        add_options_page('Bangumi 追番列表', 'Bangumi 追番列表', 'manage_options', 'bangumi_list_setting', [$this, 'bangumiOption']);
 
-    function initBangumi()
-    {
-        $options = $this->getOption();
-        add_options_page('Bangumi 追番列表', 'Bangumi 追番列表', 'manage_options', 'bangumi_list_setting', [$this, 'optionPage']);
         if (isset($_POST['bangumi_submit'])) {
             $options['bangumiID'] = stripslashes($_POST['bangumiID']);
+            if ($_POST['globalScripts']) {
+                $options['globalScripts'] = true;
+            } else {
+                $options['globalScripts'] = false;
+            }
             if ($_POST['isCache']) {
                 $options['isCache'] = true;
             } else {
@@ -84,17 +72,15 @@ class bangumiList
         }
     }
 
-    function optionPage()
+    public function bangumiOption()
     {
         require_once('option.php');
     }
 
-    public function outPut($atts, $content = "")
+    public function bangumiShow($atts, $content = "")
     {
         // TODO 修改为文件读取形式
-        return '<script src="' . plugins_url('js/bangumi_list.js', __FILE__) . '"></script>
-            <link rel="stylesheet" type="text/css" href="' . plugins_url('css/bangumi_list.css', __FILE__) . ' " />
-            <div id="bangumi_list_content">
+        return '<div id="bangumi_list_content">
         <div class="bangumi_loading">
             <div class="loading-anim">
                 <div class="border out"></div>
@@ -121,39 +107,52 @@ class bangumiList
     <div style="clear:both"></div>
     <div id="bangumi_nav"><ui id="bangumi_list_nav"></ui></div>
     <script>
-        let xmlhttp;
-        function getBangumiData(){
-            if(window.XMLHttpRequest)
-            {
-                xmlhttp=new XMLHttpRequest();
-            }else{
-                alert("where is my xmlreq?");
-                return;
-            }
-            xmlhttp.onreadystatechange=function()
-            {
-                if (xmlhttp.readyState==4 && xmlhttp.status==200)
-                {
-                    if(parseBangumiData)
-                    {   
-                        let bangumiData;
-                        try{
-                            bangumiData = JSON.parse(xmlhttp.responseText);
-                            parseBangumiData(bangumiData);
-                        }catch(e){
-                            console.log(xmlhttp.responseText);
-                            console.log(e);
-                        }
-
-                    }
-                }
-            }
-            xmlhttp.open("get", "' . admin_url('admin-ajax.php') . '?action=GetBangumiData", true);
-            xmlhttp.send();
-        }
         getBangumiData();
     </script>
     ';
+    }
+
+    public function bangumiScripts()
+    {
+        $options = $this->_getOption();
+
+        if ((bool)$options['globalScripts'] === false) {
+            global $post;//, $posts;
+            //foreach ($posts as $post) {
+                if (has_shortcode($post->post_content, 'bangumi')) {
+                    $this->_loadScripts();
+                    //break;
+                }
+            //}
+        } else {
+            $this->_loadScripts();
+        }
+    }
+
+    private function _getOption()
+    {
+        $options = get_option('bangumi_list');
+        if (!is_array($options)) {
+            $options['bangumiID'] = '';
+            $options['color'] = '#ff8c83';
+            $options['globalScripts'] = true;
+            $options['isCache'] = false;
+            $options['isProxy'] = false;
+            $options['singleItemNum'] = 10;
+            $options['singleNavNum'] = 3;
+            update_option('bangumi_list', $options);
+        }
+        return $options;
+    }
+
+    private function _loadScripts()
+    {
+        wp_enqueue_style('bangumi-list', plugins_url('css/bangumi_list.css', __FILE__), false, BGMLIST_VER);
+        wp_enqueue_script('bangumi-list', plugins_url('js/bangumi_list.js', __FILE__), false, BGMLIST_VER);
+        wp_localize_script('bangumi-list', 'BangumiList', [
+            'ajaxurl' => admin_url('admin-ajax.php'),
+            'version' => BGMLIST_VER,
+        ]);
     }
 }
 

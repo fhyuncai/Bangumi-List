@@ -1,5 +1,4 @@
-let main_Container = document.getElementById("bangumi_list_content");
-let nav_Container = document.getElementById("bangumi_list_nav");
+let main_Container, nav_Container;
 
 let bangumiData = null;
 let bangumiItemData = null;
@@ -14,10 +13,9 @@ let configData = {
 }
 
 function parseBangumiData(args) {
-    if (!main_Container || !nav_Container) {
-        main_Container = document.getElementById("bangumi_list_content");
-        nav_Container = document.getElementById("bangumi_list_nav");
-    }
+    main_Container = document.getElementById("bangumi_list_content");
+    nav_Container = document.getElementById("bangumi_list_nav");
+
     if (args.messageType == "bangumi_list_data") {
         bangumiData = args;
         bangumiItemData = args.messageContent.content;
@@ -303,4 +301,47 @@ function prevPage() {
     }
     configData.pageNow--;
     JumpPage(configData.pageNow);
+}
+
+function reloadBangumiList() {
+    main_Container = null;
+    nav_Container = null;
+
+    bangumiData = null;
+    bangumiItemData = null;
+
+    configData = {
+        pageNum: 0,
+        pageNow: 0,
+        singleItemNum: 0,
+        singleNavNum: 5
+    }
+}
+
+function getBangumiData() {
+    reloadBangumiList();
+
+    let xmlhttp;
+    if (window.XMLHttpRequest) {
+        xmlhttp = new XMLHttpRequest();
+    } else {
+        alert("where is my xmlreq?");
+        return;
+    }
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+            if (parseBangumiData) {   
+                var bangumiData;
+                try {
+                    bangumiData = JSON.parse(xmlhttp.responseText);
+                    parseBangumiData(bangumiData);
+                } catch(e) {
+                    console.log(xmlhttp.responseText);
+                    console.log(e);
+                }
+            }
+        }
+    }
+    xmlhttp.open("get", BangumiList.ajaxurl + "?action=GetBangumiData", true);
+    xmlhttp.send();
 }

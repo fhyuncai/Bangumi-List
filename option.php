@@ -57,50 +57,33 @@ $options = get_option('bangumi_list');
                             <input type="checkbox" name="isCache" <?php echo $options['isCache'] ? 'checked' : '' ?> /><span> 启用</span>
                         </label></td>
                 </tr>
+                <tr>
+                    <th>全局加载资源</th>
+                    <td><label>
+                            <input type="checkbox" name="globalScripts" <?php echo $options['globalScripts'] ? 'checked' : '' ?> /><span> 启用</span>
+                        </label>
+                        <p class="description">启用后无论是否使用了短代码都会加载CSS、JS资源，适合启用了 Pjax 的站点</p>
+                    </td>
+                </tr>
             </table>
         </div>
         <p class="submit">
-            <input type="submit" name="bangumi_submit" class="button button-primary" value="保存设置" />
+            <input type="submit" name="bangumi_submit" class="button button-primary" onclick="submitBangumi()" value="保存设置" />
             <input type="submit" name="bangumi_clear" class="button button-secondary" value="清空缓存" />
         </p>
-        Bangumi-List 版本: <?php echo BGMLIST_VER ?> 作者: <a href="https://yuncaioo.com">FHYunCai</a>
-        <!--<a href="https://yuncaioo.com">帮助</a>-->
+        <a href="https://github.com/fhyuncai/Bangumi-List" target="_blank">Bangumi-List</a> 版本: <?php echo BGMLIST_VER ?> 作者: <a href="https://yuncaioo.com" target="_blank">FHYunCai</a>
     </form>
 
     <style>
-        .wrap h3 {
-            margin: 0;
-        }
-
         .wrap th {
             font-weight: normal;
         }
-
-        .wrap.searching .nav-tab-wrapper a,
-        .wrap.searching .panel tr,
-        body.show-filters .wrap form {
-            display: none
-        }
-
-        .wrap.searching .panel {
-            display: block !important;
-        }
-
-        .filter-drawer {
-            padding-top: 0;
-            padding-bottom: 0;
-        }
-
-        .filter-drawer ul {
-            list-style: disc inside;
-        }
     </style>
     <script>
-        /* global wp */
-        jQuery(function($) {
-            $(".bangumi_list form").submit(function() {
-                $(".submit .button").prop("disabled", true);
-                $(this).find(".submit .button").val("正在提交…");
+        function submitBangumi() {
+            jQuery(function($) {
+                $("[name='bangumi_submit']").prop("disabled", true);
+                $("[name='bangumi_submit']").val("正在提交…");
             });
-        });
+        }
     </script>
