@@ -28,6 +28,7 @@ License URI: https://github.com/fhyuncai/Bangumi-List/blob/main/LICENSE
 
 = 1.1.0
 - 优化 列表布局
+- 优化 后台配置说明
 = 1.0.1 =
 - 修复 启用 Pjax 的站点可能无法加载列表
 - 新增 全局加载资源选项，启用后无论是否使用了短代码都会加载CSS、JS资源
