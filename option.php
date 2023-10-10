@@ -19,7 +19,9 @@ $options = get_option('bangumi_list');
                     <th>Bangumi ID</th>
                     <td><label>
                             <input type="text" name="bangumiID" style="width:272px;" value="<?php echo $options['bangumiID'] ?>" />
-                        </label></td>
+                        </label>
+                        <p class="description">追番列表数据来源的 Bangumi UID 或 用户名，可在 Bangumi 的个人页面 URL 中找到</p>
+                    </td>
                 </tr>
                 <tr>
                     <th>主题颜色</th>
@@ -43,7 +45,7 @@ $options = get_option('bangumi_list');
                         <p class="description">若当前页为头尾，数量可能多于该数值</p>
                     </td>
                 </tr>
-                <tr>
+                <tr style="display:none;">
                     <th>使用第三方接口</th>
                     <td><label>
                             <input type="checkbox" name="isProxy" <?php echo $options['isProxy'] ? 'checked' : '' ?> /><span> 启用</span>

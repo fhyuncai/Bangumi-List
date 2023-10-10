@@ -79,11 +79,11 @@ function GetBangumiData()
 
             if (is_file($cachePath)) $cacheData = json_decode(file_get_contents($cachePath), true);
 
-            if (is_file($cachePath) && $cacheData['date'] == $nowDate) {
+            if (is_file($cachePath) && $cacheData['date'] == $nowDate && $cacheData['user'] == $userId) {
                 $content = $cacheData['data'];
             } else {
                 $content = $bgm->getCollections();
-                file_put_contents($cachePath, json_encode(['date' => $nowDate, 'data' => $content]));
+                file_put_contents($cachePath, json_encode(['user' => $userId, 'date' => $nowDate, 'data' => $content]));
             }
         } else {
             $content = $bgm->getCollections();

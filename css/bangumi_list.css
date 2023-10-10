@@ -219,7 +219,8 @@
 
 /* 主窗口 */
 .bangumi_list_autofill {
-  grid-template-columns: repeat(auto-fill, 290px);
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
 }
 
 #bangumi_list_content {
@@ -227,24 +228,21 @@
   width: 100%;
   overflow: auto;
   padding: 10px;
-  /* flex-direction: row;
-  flex-wrap: wrap; */
-  /* grid-template-columns: repeat(auto-fill, 290px); */
   justify-content: center;
 }
 
 #bangumi_list_content .BangumiItem {
   display: block;
   height: 90px;
-  width: 280px;
+  width: 100%;
   overflow: hidden;
   padding: 5px;
   color: #14191e;
   white-space: nowrap;
-  margin-top: 10px;
-  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
-  margin-left: 10px;
+  border-radius: 4px;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.1)!important;
   box-sizing: border-box;
+  margin-left: 10px;
   font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;
 
 }
@@ -269,6 +267,10 @@
 #bangumi_list_content a:hover {
   box-shadow: none;
   border: none;
+}
+
+#bangumi_list_content a:hover:before {
+  transform: scaleX(0)!important;
 }
 
 #bangumi_list_content a.BangumiUrl {
