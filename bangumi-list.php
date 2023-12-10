@@ -4,13 +4,13 @@
  * Plugin Name: Bangumi 追番列表
  * Plugin URI: https://github.com/fhyuncai/Bangumi-List
  * Description: 展示追番列表的 WordPress 插件，使用短代码 [bangumi] 即可在文章或页面上展示自己在 Bangumi 的追番列表
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: FHYunCai
  * Author URI: https://yuncaioo.com
  */
 
 defined('ABSPATH') or exit;
-define('BGMLIST_VER', '1.1.0');
+define('BGMLIST_VER', '1.1.1');
 
 require_once('bangumi-api.php');
 
@@ -31,22 +31,26 @@ class bangumiList
 
         if (isset($_POST['bangumi_submit'])) {
             $options['bangumiID'] = stripslashes($_POST['bangumiID']);
-            if ($_POST['globalScripts']) {
+
+            if (isset($_POST['globalScripts'])) {
                 $options['globalScripts'] = true;
             } else {
                 $options['globalScripts'] = false;
             }
-            if ($_POST['isCache']) {
+            
+            if (isset($_POST['isCache'])) {
                 $options['isCache'] = true;
             } else {
                 $options['isCache'] = false;
             }
-            if ($_POST['isProxy']) {
+
+            if (isset($_POST['isProxy'])) {
                 $options['isProxy'] = true;
             } else {
                 $options['isProxy'] = false;
             }
-            if ($_POST['singleItemNum']) {
+
+            if (isset($_POST['singleItemNum'])) {
                 $tempItemNum = stripslashes($_POST['singleItemNum']);
                 if (is_numeric($tempItemNum)) {
                     $options['singleItemNum'] = (intval($tempItemNum) <= 0 ? 12 : intval($tempItemNum));
@@ -54,7 +58,8 @@ class bangumiList
                     $options['singleItemNum'] = 12;
                 }
             }
-            if ($_POST['singleNavNum']) {
+
+            if (isset($_POST['singleNavNum'])) {
                 $tempNavNum = stripslashes($_POST['singleNavNum']);
                 if (is_numeric($tempNavNum)) {
                     $options['singleNavNum'] = (intval($tempNavNum) <= 0 ? 3 : intval($tempNavNum));
@@ -62,6 +67,7 @@ class bangumiList
                     $options['singleNavNum'] = 3;
                 }
             }
+            
             $options['color'] = stripslashes($_POST['color']);
             update_option('bangumi_list', $options);
             echo '<div id="message" class="updated"><h4>设置已保存</h4></div>';

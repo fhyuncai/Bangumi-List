@@ -50,7 +50,7 @@ $options = get_option('bangumi_list');
                     <td><label>
                             <input type="checkbox" name="isProxy" <?php echo $options['isProxy'] ? 'checked' : '' ?> /><span> 启用</span>
                         </label>
-                        <p class="description">实验项目</p>
+                        <p class="description">实验项目，不建议启用</p>
                     </td>
                 </tr>
                 <tr>
@@ -85,7 +85,7 @@ $options = get_option('bangumi_list');
         function submitBangumi() {
             jQuery(function($) {
                 $("[name='bangumi_submit']").prop("disabled", true);
-                $("[name='bangumi_submit']").val("正在提交…");
+                $("[name='bangumi_submit']").val("正在保存…");
             });
         }
     </script>

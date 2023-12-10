@@ -1,10 +1,10 @@
-=== Bangumi List for WordPress ===
+=== FHYunCai's Bangumi List ===
 Contributors: FHYunCai
 Donate link: https://yuncaioo.com/donate.html
 Tags: Bangumi, Anime, List
 Requires at least: 4.6
-Tested up to: 6.2.2
-Stable tag: 1.1.0
+Tested up to: 6.4.2
+Stable tag: 1.1.1
 Requires PHP: 5.4
 License: MIT
 License URI: https://github.com/fhyuncai/Bangumi-List/blob/main/LICENSE
@@ -26,6 +26,9 @@ License URI: https://github.com/fhyuncai/Bangumi-List/blob/main/LICENSE
 
 == Changelog ==
 
+= 1.1.1
+- 修复 列表布局 Bug
+- 修复 PHP 8.0 及以上版本保存设置时出现 Warning 报错
 = 1.1.0
 - 优化 列表布局
 - 优化 后台配置说明
