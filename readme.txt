@@ -4,7 +4,7 @@ Donate link: https://yuncaioo.com/donate.html
 Tags: Bangumi, Anime, List
 Requires at least: 4.6
 Tested up to: 6.4.2
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 Requires PHP: 5.4
 License: MIT
 License URI: https://github.com/fhyuncai/Bangumi-List/blob/main/LICENSE
