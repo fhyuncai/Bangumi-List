@@ -38,6 +38,18 @@ $options = get_option('bangumi_list');
                         </label></td>
                 </tr>
                 <tr>
+                    <th>显示“在看”的番剧</th>
+                    <td><label>
+                            <input type="checkbox" name="isWatching" <?php echo $options['isWatching'] ? 'checked' : '' ?> /><span> 启用</span>
+                        </label></td>
+                </tr>
+                <tr>
+                    <th>显示“看过”的番剧</th>
+                    <td><label>
+                            <input type="checkbox" name="isWatched" <?php echo $options['isWatched'] ? 'checked' : '' ?> /><span> 启用</span>
+                        </label></td>
+                </tr>
+                <tr>
                     <th>单页导航标签数量</th>
                     <td><label>
                             <input type="number" name="singleNavNum" value="<?php echo $options['singleNavNum'] ?>" />

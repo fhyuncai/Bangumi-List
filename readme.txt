@@ -4,7 +4,7 @@ Donate link: https://yuncaioo.com/donate.html
 Tags: Bangumi, Anime, List
 Requires at least: 4.6
 Tested up to: 6.4.2
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 Requires PHP: 5.4
 License: MIT
 License URI: https://github.com/fhyuncai/Bangumi-List/blob/main/LICENSE
@@ -26,6 +26,8 @@ License URI: https://github.com/fhyuncai/Bangumi-List/blob/main/LICENSE
 
 == Changelog ==
 
+= 1.1.2
+- 新增 “看过”和“在看”番剧的选项
 = 1.1.1
 - 修复 列表布局 Bug
 - 修复 PHP 8.0 及以上版本保存设置时出现 Warning 报错
