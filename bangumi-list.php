@@ -156,7 +156,7 @@ class bangumiList
             $options['globalScripts'] = true;
             $options['isCache'] = false;
             $options['isProxy'] = false;
-            $options['isWatching'] = false;
+            $options['isWatching'] = true;
             $options['isWatched'] = false;
             $options['singleItemNum'] = 10;
             $options['singleNavNum'] = 3;
