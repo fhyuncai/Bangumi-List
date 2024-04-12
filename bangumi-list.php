@@ -2,15 +2,15 @@
 
 /**
  * Plugin Name: Bangumi 追番列表
- * Plugin URI: https://github.com/fhyuncai/Bangumi-List
+ * Plugin URI: https://github.com/SwordofMorning/Wordpress-Bangumi
  * Description: 展示追番列表的 WordPress 插件，使用短代码 [bangumi] 即可在文章或页面上展示自己在 Bangumi 的追番列表
- * Version: 1.1.1
- * Author: FHYunCai
- * Author URI: https://yuncaioo.com
+ * Version: 1.1.2
+ * Author: FHYunCai, SwordofMorning
+ * Author URI: https://swordofmorning.com/
  */
 
 defined('ABSPATH') or exit;
-define('BGMLIST_VER', '1.1.1');
+define('BGMLIST_VER', '1.1.2');
 
 require_once('bangumi-api.php');
 
@@ -50,6 +50,18 @@ class bangumiList
                 $options['isProxy'] = false;
             }
 
+            if (isset($_POST['isWatching'])) {
+                $options['isWatching'] = true;
+            } else {
+                $options['isWatching'] = false;
+            }
+
+            if (isset($_POST['isWatched'])) {
+                $options['isWatched'] = true;
+            } else {
+                $options['isWatched'] = false;
+            }
+        
             if (isset($_POST['singleItemNum'])) {
                 $tempItemNum = stripslashes($_POST['singleItemNum']);
                 if (is_numeric($tempItemNum)) {
@@ -144,6 +156,8 @@ class bangumiList
             $options['globalScripts'] = true;
             $options['isCache'] = false;
             $options['isProxy'] = false;
+            $options['isWatching'] = false;
+            $options['isWatched'] = false;
             $options['singleItemNum'] = 10;
             $options['singleNavNum'] = 3;
             update_option('bangumi_list', $options);

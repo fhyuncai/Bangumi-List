@@ -17,17 +17,28 @@ class BangumiAPI
         $this->collectionApi = $this->apiUrl . '/v0/users/' . $this->userID . '/collections';
     }
 
-    public function getCollections()
+    public function getCollections($isWatching, $isWatched)
     {
         //return $this->http_get_contents($this->collectionApi);
         $collOffset = 0;
         $collDataArr = [];
 
-        do {
-            $collData = json_decode($this->http_get_contents($this->collectionApi . '?subject_type=2&type=3&limit=50&offset=' . $collOffset), true);
-            $collDataArr = array_merge($collDataArr, $collData['data']);
-            $collOffset += 50;
-        } while ($collOffset < $collData['total']);
+        if ($isWatching) {
+            do {
+                $collData = json_decode($this->http_get_contents($this->collectionApi . '?subject_type=2&type=3&limit=50&offset=' . $collOffset), true);
+                $collDataArr = array_merge($collDataArr, $collData['data']);
+                $collOffset += 50;
+            } while ($collOffset < $collData['total']);
+        }
+
+        if ($isWatched) {
+            $collOffset = 0;
+            do {
+                $collData = json_decode($this->http_get_contents($this->collectionApi . '?subject_type=2&type=2&limit=50&offset=' . $collOffset), true);
+                $collDataArr = array_merge($collDataArr, $collData['data']);
+                $collOffset += 50;
+            } while ($collOffset < $collData['total']);
+        }
 
         $collArr = [];
         foreach ($collDataArr as $value) {
@@ -64,6 +75,8 @@ function GetBangumiData()
         $userId = $BangumiOptions['bangumiID'];
         $isCache = (bool)$BangumiOptions['isCache'];
         $isProxy = (bool)$BangumiOptions['isProxy'];
+        $isWatching = (bool)$BangumiOptions['isWatching'];
+        $isWatched = (bool)$BangumiOptions['isWatched'];
         $proxyApi = ($isProxy ? 'http://api.bgm.atkoi.cn' : null);
         $mainColor = $BangumiOptions['color'];
         $singleItemNum = $BangumiOptions['singleItemNum'];
@@ -82,11 +95,11 @@ function GetBangumiData()
             if (is_file($cachePath) && $cacheData['date'] == $nowDate && $cacheData['user'] == $userId) {
                 $content = $cacheData['data'];
             } else {
-                $content = $bgm->getCollections();
+                $content = $bgm->getCollections($isWatching, $isWatched);
                 file_put_contents($cachePath, json_encode(['user' => $userId, 'date' => $nowDate, 'data' => $content]));
             }
         } else {
-            $content = $bgm->getCollections();
+            $content = $bgm->getCollections($isWatching, $isWatched);
         }
     } else {
         $bangumiResCode = 202;

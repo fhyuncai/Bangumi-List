@@ -26,6 +26,8 @@ License URI: https://github.com/fhyuncai/Bangumi-List/blob/main/LICENSE
 
 == Changelog ==
 
+= 1.1.2
+- 新增 “看过”和“在看”番剧的选项
 = 1.1.1
 - 修复 列表布局 Bug
 - 修复 PHP 8.0 及以上版本保存设置时出现 Warning 报错
