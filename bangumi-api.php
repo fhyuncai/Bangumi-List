@@ -58,7 +58,7 @@ class BangumiAPI
 
     private static function http_get_contents($_url)
     {
-        $response = wp_remote_get($_url, array('user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101 Firefox/75.0'));
+        $response = wp_remote_get($_url, ['user-agent' => 'fhyuncai/BangumiList/' . BGMLIST_VER . ' (WordPressPlugin) (https://github.com/fhyuncai/Bangumi-List)']);
         if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
             $body = wp_remote_retrieve_body($response);
         } else {

@@ -4,13 +4,13 @@
  * Plugin Name: Bangumi 追番列表
  * Plugin URI: https://github.com/fhyuncai/Bangumi-List
  * Description: 展示追番列表的 WordPress 插件，使用短代码 [bangumi] 即可在文章或页面上展示自己在 Bangumi 的追番列表
- * Version: 1.1.2
+ * Version: 1.1.3
  * Author: FHYunCai
  * Author URI: https://yuncaioo.com
  */
 
 defined('ABSPATH') or exit;
-define('BGMLIST_VER', '1.1.2');
+define('BGMLIST_VER', '1.1.3');
 
 require_once('bangumi-api.php');
 
