@@ -13,7 +13,7 @@ defined('ABSPATH') or exit;
 define('BGMLIST_VER', '1.1.4');
 
 require_once('bangumi-api.php');
-require_once('update.php');
+require_once('plugin-update-checker/plugin-update-checker.php');
 
 class bangumiList
 {
@@ -184,5 +184,12 @@ function bangumiPluginActivate()
 }
 
 register_activation_hook(__FILE__, 'bangumiPluginActivate');
+
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+$myUpdateChecker = PucFactory::buildUpdateChecker(
+    'https://api.yuncaioo.com/plugin-api/bangumi-list/details.json',
+    __FILE__,
+    'bangumi-list'
+);
 
 new bangumiList();
