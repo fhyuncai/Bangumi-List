@@ -2,9 +2,9 @@
 Contributors: FHYunCai
 Donate link: https://yuncaioo.com/donate.html
 Tags: Bangumi, Anime, List
-Requires at least: 4.6
-Tested up to: 6.4.2
-Stable tag: 1.1.3
+Requires at least: 5.4
+Tested up to: 6.5.2
+Stable tag: 1.1.4
 Requires PHP: 5.4
 License: MIT
 License URI: https://github.com/fhyuncai/Bangumi-List/blob/main/LICENSE
@@ -26,6 +26,8 @@ License URI: https://github.com/fhyuncai/Bangumi-List/blob/main/LICENSE
 
 == Changelog ==
 
+= 1.1.4
+- 新增 支持在 WordPress 配置插件更新
 = 1.1.3
 - 优化 修改 User Agent 以符合 Bangumi API 规范
 = 1.1.2

@@ -8,9 +8,6 @@ $options = get_option('bangumi_list');
 <div class="wrap">
     <h2>Bangumi 追番列表 配置面板</h2>
 
-    <!--<div id="message" class="updated"><p>Bangumi 追番列表 <?php echo BGMLIST_VER ?>版本更新日志：<br />
-[无]无
-</div>-->
     <form method="POST" action="">
         <input type="hidden" name="update_pluginoptions" value="true" />
         <div class="bangumi_panel" style="display:block;margin:0 20px">

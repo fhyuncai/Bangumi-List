@@ -342,6 +342,6 @@ function getBangumiData() {
             }
         }
     }
-    xmlhttp.open("get", BangumiList.ajaxurl + "?action=GetBangumiData", true);
+    xmlhttp.open("get", BangumiList.ajaxurl + "?action=getBangumiData", true);
     xmlhttp.send();
 }

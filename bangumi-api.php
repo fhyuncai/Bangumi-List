@@ -68,7 +68,7 @@ class BangumiAPI
     }
 }
 
-function GetBangumiData()
+function getBangumiData()
 {
     $BangumiOptions = get_option('bangumi_list');
     if (is_array($BangumiOptions) && $BangumiOptions['bangumiID']) {
@@ -119,5 +119,5 @@ function GetBangumiData()
     die();
 }
 
-add_action("wp_ajax_nopriv_GetBangumiData", "GetBangumiData");
-add_action("wp_ajax_GetBangumiData", "GetBangumiData");
+add_action("wp_ajax_nopriv_getBangumiData", "getBangumiData");
+add_action("wp_ajax_getBangumiData", "getBangumiData");

@@ -4,15 +4,16 @@
  * Plugin Name: Bangumi 追番列表
  * Plugin URI: https://github.com/fhyuncai/Bangumi-List
  * Description: 展示追番列表的 WordPress 插件，使用短代码 [bangumi] 即可在文章或页面上展示自己在 Bangumi 的追番列表
- * Version: 1.1.3
+ * Version: 1.1.4
  * Author: FHYunCai
  * Author URI: https://yuncaioo.com
  */
 
 defined('ABSPATH') or exit;
-define('BGMLIST_VER', '1.1.3');
+define('BGMLIST_VER', '1.1.4');
 
 require_once('bangumi-api.php');
+require_once('update.php');
 
 class bangumiList
 {
@@ -37,7 +38,7 @@ class bangumiList
             } else {
                 $options['globalScripts'] = false;
             }
-            
+
             if (isset($_POST['isCache'])) {
                 $options['isCache'] = true;
             } else {
@@ -61,7 +62,7 @@ class bangumiList
             } else {
                 $options['isWatched'] = false;
             }
-        
+
             if (isset($_POST['singleItemNum'])) {
                 $tempItemNum = stripslashes($_POST['singleItemNum']);
                 if (is_numeric($tempItemNum)) {
@@ -79,7 +80,7 @@ class bangumiList
                     $options['singleNavNum'] = 3;
                 }
             }
-            
+
             $options['color'] = stripslashes($_POST['color']);
             update_option('bangumi_list', $options);
             echo '<div id="message" class="updated"><h4>设置已保存</h4></div>';
@@ -135,12 +136,12 @@ class bangumiList
         $options = $this->_getOption();
 
         if ((bool)$options['globalScripts'] === false) {
-            global $post;//, $posts;
+            global $post; //, $posts;
             //foreach ($posts as $post) {
-                if (has_shortcode($post->post_content, 'bangumi')) {
-                    $this->_loadScripts();
-                    //break;
-                }
+            if (has_shortcode($post->post_content, 'bangumi')) {
+                $this->_loadScripts();
+                //break;
+            }
             //}
         } else {
             $this->_loadScripts();
@@ -176,5 +177,12 @@ class bangumiList
     }
 }
 
+function bangumiPluginActivate()
+{
+    // 插件启用统计，仅收集启用的版本
+    wp_remote_post('https://api.yuncaioo.com/plugin-api/bangumi-list/statistics.php', ['body' => ['installed' => 'true', 'ver' => BGMLIST_VER]]);
+}
+
+register_activation_hook(__FILE__, 'bangumiPluginActivate');
 
 new bangumiList();
